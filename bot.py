@@ -1,5 +1,5 @@
 from telegram.ext import Updater,CallbackContext
-from telegram import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, Update
+from telegram import ReplyKeyboardMarkup, ReplyMarkup ,InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, Update
 from db import DB
 
 db = DB("db.json")
@@ -18,11 +18,15 @@ class Samtuit:
             bot.send_message(chat_id=chat_id, text=text)
 
         elif job:
-            print(job)
-            text = "You have a job"
+            text = "Botimizga xush kelibsiz\n Hozircha sizga murojat yo'q ✅"
             bot.send_message(chat_id=chat_id, text=text)
 
         else:
-            print(chat_id)
-            text = "user"
-            bot.send_message(chat_id=chat_id, text=text)
+            text = "Botimizga xush kelibsiz\n Sizning murojatlaringizga javob berish\n uchun hodimlarimiz hamisha tayyor 🥰"
+            jobs = db.get_all_jobs()
+            keyboard = []
+            for job in jobs:
+                keyboard.append([job["job_name"]])
+            
+            reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+            bot.send_message(chat_id=chat_id, text=text, reply_markup=reply_markup)
