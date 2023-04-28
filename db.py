@@ -29,3 +29,15 @@ class DB:
         else:
             self.table.insert(Document({"chat_id": chat_id}, doc_id=chat_id))
             return True
+        
+    def get_job(self, chat_id):
+        return self.table.get(doc_id=chat_id)
+    
+    def get_admin(self, chat_id):
+        return self.table.get(doc_id=chat_id)
+    
+    def get_all_jobs(self):
+        return self.table.all()
+    
+    def get_all_admins(self):
+        return self.table.all()
