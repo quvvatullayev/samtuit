@@ -46,6 +46,17 @@ class Samtuit:
         chat_id = int(query.message.chat_id)
         data = query.data
         job_id = data.split("__")[1]
-        self.chat_id = job_id
+        self.chat_id = int(job_id)
         text = "Sizning murojatingizni qabul \nqilishga tayyormiz😊, surovingizni yozing📨"
         query.edit_message_text(text=text)
+
+    def post(self,update:Update,context:CallbackContext):
+        bot = context.bot
+        chat_id = int(update.message.chat_id)
+        text = update.message.text
+        job_id = self.chat_id
+
+        text = f'Sizga yangi murojat kelib tushdi:\n\n' + text
+        bot.send_message(chat_id=job_id, text=text)
+        text = "Sizning murojatingiz muvaffaqiyatli jo'natilmadi😊,\n javobni kuting"
+        bot.send_message(chat_id=chat_id, text=text)

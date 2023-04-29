@@ -10,6 +10,7 @@ updater = Updater(token=TOKEN, use_context=True)
 updater.dispatcher.add_handler(CommandHandler("start", bot.start))
 updater.dispatcher.add_handler(MessageHandler(Filters.text("Murojat qoldirish"), bot.qurey))
 updater.dispatcher.add_handler(CallbackQueryHandler(bot.psot_job, pattern="chat_id__"))
+updater.dispatcher.add_handler(MessageHandler(Filters.text, bot.post))
 
 updater.start_polling()
 updater.idle()
