@@ -102,3 +102,29 @@ class Samtuit:
         self.user_id = None
         text = "Murojat rad etildi 😊"
         query.edit_message_text(text=text, reply_markup=None)
+
+    def add_job(self,update:Update,context:CallbackContext):
+        bot = context.bot
+        chat_id = int(update.message.chat_id)
+        text = """Job nomini kiriting\nNamuna : \njob_name:ogabek\nchat_id:123456789\n"""
+        bot.send_message(chat_id=chat_id, text=text)
+
+    def add_admin(self,update:Update,context:CallbackContext):
+        bot = context.bot
+        chat_id = int(update.message.chat_id)
+        text = """Admin nomini kiriting\nNamuna : \nadmin_name:ogabek\nchat_id:123456789\n"""
+        bot.send_message(chat_id=chat_id, text=text)
+
+    def delete_job(self,update:Update,context:CallbackContext):
+        bot = context.bot
+        chat_id = int(update.message.chat_id)
+        text = """Job nomini kiriting\nNamuna : \njob_name:ogabek\n"""
+        bot.send_message(chat_id=chat_id, text=text)
+
+    def delete_admin(self,update:Update,context:CallbackContext):
+        bot = context.bot
+        chat_id = int(update.message.chat_id)
+        text = """Admin nomini kiriting\nNamuna : \nadmin_name:ogabek\n"""
+        bot.send_message(chat_id=chat_id, text=text)
+
+
