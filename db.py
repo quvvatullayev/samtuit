@@ -41,3 +41,18 @@ class DB:
     
     def get_all_admins(self):
         return self.admin.all()
+
+    def delete_job(self, chat_id):
+        self.jobs.remove(doc_ids=[chat_id])
+    
+    def delete_admin(self, chat_id):
+        self.admin.remove(doc_ids=[chat_id])
+    
+    def update_job(self, chat_id, job_name):
+        self.jobs.update({"job_name": job_name}, doc_ids=[chat_id])
+
+    def update_admin(self, chat_id):
+        self.admin.update({"chat_id": chat_id}, doc_ids=[chat_id])
+
+    def search_job(self, job_id:int):
+        return self.jobs.search(self.query.doc_id == job_id)
