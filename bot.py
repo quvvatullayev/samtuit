@@ -56,18 +56,26 @@ class Samtuit:
         chat_id = int(update.message.chat_id)
         text = update.message.text
         job_id = self.job_id
+        jobs = db.search_job(str(chat_id))
 
-        text = f'Sizga yangi murojat kelib tushdi:\n\n' + text
-        keyboard = [
-                [
-                    InlineKeyboardButton(text="javob bersh", callback_data=f'request_{chat_id}'), 
-                    InlineKeyboardButton(text='rad etish', callback_data=f"notrequest_{chat_id}")
+        if jobs:
+            text1 = f"Sizning javobingiz yuborildi😊"
+            bot.send_message(chat_id=chat_id, text=text1)
+            text = f"Javob:\n\n{text}"
+            bot.send_message(chat_id=self.user_id, text=text)
+
+        else:
+            text = f'Sizga yangi murojat kelib tushdi:\n\n' + text
+            keyboard = [
+                    [
+                        InlineKeyboardButton(text="javob bersh", callback_data=f'request_{chat_id}'), 
+                        InlineKeyboardButton(text='rad etish', callback_data=f"notrequest_{chat_id}")
+                    ]
                 ]
-            ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        bot.send_message(chat_id=job_id, text=text, reply_markup = reply_markup)
-        text = "Sizning murojatingiz muvaffaqiyatli jo'natilmadi😊,\n javobni kuting"
-        bot.send_message(chat_id=chat_id, text=text)
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            bot.send_message(chat_id=job_id, text=text, reply_markup = reply_markup)
+            text = "Sizning murojatingiz muvaffaqiyatli jo'natilmadi😊,\n javobni kuting"
+            bot.send_message(chat_id=chat_id, text=text)
 
     def get_request(self,update:Update,context:CallbackContext):
         query = update.callback_query

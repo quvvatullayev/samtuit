@@ -55,4 +55,4 @@ class DB:
         self.admin.update({"chat_id": chat_id}, doc_ids=[chat_id])
 
     def search_job(self, job_id:int):
-        return self.jobs.search(self.query.doc_id == job_id)
+        return self.jobs.get(doc_id=job_id)
