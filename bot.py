@@ -67,12 +67,18 @@ class Samtuit:
         jobs = db.search_job(str(chat_id))
 
         if "admin_name:" in text:
-            """Admin nomini kiriting\nNamuna : \nadmin_name:ogabek\nchat_id:123456789\n"""
             text = text.split('\n')
-            admin_name = text[0].split(':')[1]
             admin_chat_id = text[1].split(':')[1]
             db.add_admin(admin_chat_id)
             text = "Admin qo'shildi ✅"
+            bot.send_message(chat_id=chat_id, text=text)
+        
+        elif "job_name:" in text:
+            text = text.split('\n')
+            job_name = text[0].split(':')[1]
+            job_chat_id = text[1].split(':')[1]
+            db.add_job(job_name, job_chat_id)
+            text = "Job qo'shildi ✅"
             bot.send_message(chat_id=chat_id, text=text)
 
         elif jobs:
@@ -115,7 +121,7 @@ class Samtuit:
     def add_job(self,update:Update,context:CallbackContext):
         bot = context.bot
         chat_id = int(update.message.chat_id)
-        text = """Job nomini kiriting\nNamuna : \njob_name:ogabek\nchat_id:123456789\n"""
+        text = """Job nomini kiriting\nNamuna : \njob_name:hisobchi\nchat_id:123456789\n"""
         bot.send_message(chat_id=chat_id, text=text)
 
     def add_admin(self,update:Update,context:CallbackContext):
@@ -127,7 +133,7 @@ class Samtuit:
     def delete_job(self,update:Update,context:CallbackContext):
         bot = context.bot
         chat_id = int(update.message.chat_id)
-        text = """Job nomini kiriting\nNamuna : \njob_name:ogabek\n"""
+        text = """Job nomini kiriting\nNamuna : \njob_name:hisobchi\n"""
         bot.send_message(chat_id=chat_id, text=text)
 
     def delete_admin(self,update:Update,context:CallbackContext):
