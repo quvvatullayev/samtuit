@@ -40,3 +40,12 @@ class Samtuit:
         
         reply_markup = InlineKeyboardMarkup(keyboard)
         bot.send_message(chat_id=chat_id, text=text, reply_markup=reply_markup)
+
+    def psot_job(self,update:Update,context:CallbackContext):
+        query = update.callback_query
+        chat_id = int(query.message.chat_id)
+        data = query.data
+        job_id = data.split("__")[1]
+        self.chat_id = job_id
+        text = "Sizning murojatingizni qabul \nqilishga tayyormiz😊, surovingizni yozing📨"
+        query.edit_message_text(text=text)
