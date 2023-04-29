@@ -11,6 +11,8 @@ updater.dispatcher.add_handler(CommandHandler("start", bot.start))
 updater.dispatcher.add_handler(MessageHandler(Filters.text("Murojat qoldirish"), bot.qurey))
 updater.dispatcher.add_handler(CallbackQueryHandler(bot.psot_job, pattern="chat_id__"))
 updater.dispatcher.add_handler(MessageHandler(Filters.text, bot.post))
+updater.dispatcher.add_handler(CallbackQueryHandler(bot.get_request, pattern="request_"))
+updater.dispatcher.add_handler(CallbackQueryHandler(bot.get_notrequest, pattern="notrequest_"))
 
 updater.start_polling()
 updater.idle()

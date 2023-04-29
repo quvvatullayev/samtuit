@@ -68,3 +68,21 @@ class Samtuit:
         bot.send_message(chat_id=job_id, text=text, reply_markup = reply_markup)
         text = "Sizning murojatingiz muvaffaqiyatli jo'natilmadi😊,\n javobni kuting"
         bot.send_message(chat_id=chat_id, text=text)
+
+    def get_request(self,update:Update,context:CallbackContext):
+        query = update.callback_query
+        chat_id = query.message.chat_id
+        data = query.data
+        user_id = data.split('_')[1]
+        self.user_id = user_id
+
+        text = "Javobni yozing😊"
+        query.edit_message_text(text=text, reply_markup=None)
+
+    def get_notrequest(self,update:Update,context:CallbackContext):
+        query = update.callback_query
+        data = query.data
+        user_id = data.split('_')[1]
+        self.user_id = None
+        text = "Murojat rad etildi 😊"
+        query.edit_message_text(text=text, reply_markup=None)
