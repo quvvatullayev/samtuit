@@ -6,6 +6,9 @@ db = DB("db.json")
 
 
 class Samtuit:
+    def __init__(self) -> None:
+        self.chat_id = None
+    
     def start(self,update:Update,context:CallbackContext):
         bot = context.bot
         chat_id = int(update.message.chat_id)
@@ -23,10 +26,17 @@ class Samtuit:
 
         else:
             text = "Botimizga xush kelibsiz\n Sizning murojatlaringizga javob berish\n uchun hodimlarimiz hamisha tayyor 🥰"
-            jobs = db.get_all_jobs()
-            keyboard = []
-            for job in jobs:
-                keyboard.append([job["job_name"]])
-            
-            reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+            reply_markup = ReplyKeyboardMarkup([["Murojat qoldirish"]], resize_keyboard=True)
             bot.send_message(chat_id=chat_id, text=text, reply_markup=reply_markup)
+    
+    def qurey(self, update:Update,context:CallbackContext):
+        bot = context.bot
+        chat_id = int(update.message.chat_id)
+        text = "Siz keimg murojat qoldirmoqchisiz?"
+        jobs = db.get_all_jobs()
+        keyboard = []
+        for job in jobs:
+            keyboard.append([InlineKeyboardButton(job['job_name'], callback_data=f"chat_id__{job['chat_id']}")])
+        
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        bot.send_message(chat_id=chat_id, text=text, reply_markup=reply_markup)
