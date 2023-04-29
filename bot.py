@@ -7,7 +7,8 @@ db = DB("db.json")
 
 class Samtuit:
     def __init__(self) -> None:
-        self.chat_id = None
+        self.job_id = None
+        self.user_id = None
     
     def start(self,update:Update,context:CallbackContext):
         bot = context.bot
@@ -46,7 +47,7 @@ class Samtuit:
         chat_id = int(query.message.chat_id)
         data = query.data
         job_id = data.split("__")[1]
-        self.chat_id = int(job_id)
+        self.job_id = int(job_id)
         text = "Sizning murojatingizni qabul \nqilishga tayyormiz😊, surovingizni yozing📨"
         query.edit_message_text(text=text)
 
@@ -54,9 +55,16 @@ class Samtuit:
         bot = context.bot
         chat_id = int(update.message.chat_id)
         text = update.message.text
-        job_id = self.chat_id
+        job_id = self.job_id
 
         text = f'Sizga yangi murojat kelib tushdi:\n\n' + text
-        bot.send_message(chat_id=job_id, text=text)
+        keyboard = [
+                [
+                    InlineKeyboardButton(text="javob bersh", callback_data=f'request_{chat_id}'), 
+                    InlineKeyboardButton(text='rad etish', callback_data=f"notrequest_{chat_id}")
+                ]
+            ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        bot.send_message(chat_id=job_id, text=text, reply_markup = reply_markup)
         text = "Sizning murojatingiz muvaffaqiyatli jo'natilmadi😊,\n javobni kuting"
         bot.send_message(chat_id=chat_id, text=text)
