@@ -66,20 +66,38 @@ class Samtuit:
         job_id = self.job_id
         jobs = db.search_job(str(chat_id))
 
-        if "admin_name:" in text:
+        if "admin_name:" in text and 'delet_admin_name:' not in text:
             text = text.split('\n')
             admin_chat_id = text[1].split(':')[1]
-            db.add_admin(admin_chat_id)
+            admin_name = text[0].split(':')[1]
+            db.add_admin(admin_chat_id, admin_name)
             text = "Admin qo'shildi ✅"
             bot.send_message(chat_id=chat_id, text=text)
         
-        elif "job_name:" in text:
+        elif "job_name:" in text and 'delet_job_name:' not in text:
             text = text.split('\n')
             job_name = text[0].split(':')[1]
             job_chat_id = text[1].split(':')[1]
             db.add_job(job_name, job_chat_id)
             text = "Job qo'shildi ✅"
             bot.send_message(chat_id=chat_id, text=text)
+
+        elif "delet_job_name:" in text:
+            text = text.split('\n')
+            job_name = text[0].split(':')[1]
+            print(job_name)
+            db.delete_job(job_name)
+            text = "Job o'chirildi ✅"
+            bot.send_message(chat_id=chat_id, text=text)
+
+        elif "delet_admin_name:" in text:
+            # delete_admin_name:ogabek
+            text = text.split(':')
+            admin_name = text[1]
+            db.delete_admin(admin_name)
+            text = "Admin o'chirildi ✅"
+            bot.send_message(chat_id=chat_id, text=text)
+
 
         elif jobs:
             text1 = f"Sizning javobingiz yuborildi😊"
@@ -133,13 +151,13 @@ class Samtuit:
     def delete_job(self,update:Update,context:CallbackContext):
         bot = context.bot
         chat_id = int(update.message.chat_id)
-        text = """Job nomini kiriting\nNamuna : \njob_name:hisobchi\n"""
+        text = """Job nomini kiriting\nNamuna : \ndelet_job_name:hisobchi\n"""
         bot.send_message(chat_id=chat_id, text=text)
 
     def delete_admin(self,update:Update,context:CallbackContext):
         bot = context.bot
         chat_id = int(update.message.chat_id)
-        text = """Admin nomini kiriting\nNamuna : \nadmin_name:ogabek\n"""
+        text = """Admin nomini kiriting\nNamuna : \ndelet_admin_name:ogabek\n"""
         bot.send_message(chat_id=chat_id, text=text)
 
 

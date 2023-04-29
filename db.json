@@ -1,29 +1,32 @@
 {
     "jobs": {
         "677038431": {
-            "chat_id": 677038439,
+            "chat_id": 677038431,
             "job_name": "start1"
         },
-        "677038439": {
-            "chat_id": 677038439,
+        "6770384391": {
+            "chat_id": 6770384391,
             "job_name": "start2"
         },
-        "ogabek": {
-            "chat_id": "ogabek",
-            "job_name": "123456789"
+        "677038439": {
+            "job_name": "ogabek",
+            "chat_id": 677038439
         }
     },
     "admin": {
         "622009394": {
             "chat_id": 622009394,
-            "job_name": "start"
+            "admin_name": "start"
         },
-        "677038439": {
-            "chat_id": 677038439,
-            "job_name": "admin"
+        "1234567891": {
+            "chat_id": "1234567891"
         },
-        "123456789": {
-            "chat_id": "123456789"
+        "1234567893": {
+            "chat_id": "1234567893"
+        },
+        "1234567894": {
+            "chat_id": "1234567894",
+            "admin_name": "admin4"
         }
     }
 }

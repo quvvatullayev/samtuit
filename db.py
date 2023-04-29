@@ -23,11 +23,11 @@ class DB:
             self.jobs.insert(Document({"chat_id": chat_id, "job_name": job_name}, doc_id=chat_id))
             return True
 
-    def add_admin(self, chat_id):
+    def add_admin(self, chat_id, admin_name):
         if self.admin.get(doc_id=chat_id):
             return False
         else:
-            self.admin.insert(Document({"chat_id": chat_id}, doc_id=chat_id))
+            self.admin.insert(Document({"chat_id": chat_id, "admin_name":admin_name}, doc_id=chat_id))
             return True
         
     def get_job(self, chat_id):
@@ -42,11 +42,20 @@ class DB:
     def get_all_admins(self):
         return self.admin.all()
 
-    def delete_job(self, chat_id):
-        self.jobs.remove(doc_ids=[chat_id])
-    
-    def delete_admin(self, chat_id):
-        self.admin.remove(doc_ids=[chat_id])
+    def delete_job(self, name):
+        db = self.jobs
+        user = Query()
+        data = db.search(user.job_name == name)
+        chat_id = data[0]['chat_id']
+        db.remove(doc_ids=[chat_id])
+
+    def delete_admin(self, name):
+        db = self.admin
+        user = Query()
+        data = db.search(user.admin_name == name)
+        chat_id = data[0]['chat_id']
+        db.remove(doc_ids=[chat_id])
+        
     
     def update_job(self, chat_id, job_name):
         self.jobs.update({"job_name": job_name}, doc_ids=[chat_id])
