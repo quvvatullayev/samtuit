@@ -66,7 +66,16 @@ class Samtuit:
         job_id = self.job_id
         jobs = db.search_job(str(chat_id))
 
-        if jobs:
+        if "admin_name:" in text:
+            """Admin nomini kiriting\nNamuna : \nadmin_name:ogabek\nchat_id:123456789\n"""
+            text = text.split('\n')
+            admin_name = text[0].split(':')[1]
+            admin_chat_id = text[1].split(':')[1]
+            db.add_admin(admin_chat_id)
+            text = "Admin qo'shildi ✅"
+            bot.send_message(chat_id=chat_id, text=text)
+
+        elif jobs:
             text1 = f"Sizning javobingiz yuborildi😊"
             bot.send_message(chat_id=chat_id, text=text1)
             text = f"Javob:\n\n{text}"
