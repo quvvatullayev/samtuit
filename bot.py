@@ -17,9 +17,17 @@ class Samtuit:
         admin = db.get_admin(chat_id)
         
         if admin:
-            print(admin)
-            text = "You are admin"
+            text = "Botimizga xush kelibsiz\n Siz bot adminlaridan birisiz ✅"
             bot.send_message(chat_id=chat_id, text=text)
+
+            keyboard = [
+                [KeyboardButton("Job qo'shish📥"), KeyboardButton("Job o'chirish📤")],
+                [KeyboardButton("admin qo'shish📥"), KeyboardButton("admin o'chirish📤")]
+            ]
+
+            reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+            bot.send_message(chat_id=chat_id, text="Kerakli bo'limni tanlang", reply_markup=reply_markup)
+
 
         elif job:
             text = "Botimizga xush kelibsiz\n Hozircha sizga murojat yo'q ✅"
