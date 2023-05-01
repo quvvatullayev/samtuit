@@ -9,6 +9,7 @@ class Samtuit:
     def __init__(self) -> None:
         self.job_id = None
         self.user_id = None
+        self.user_text = None
     
     def start(self,update:Update,context:CallbackContext):
         bot = context.bot
@@ -81,6 +82,7 @@ class Samtuit:
             db.add_job(job_name, job_chat_id)
             text = "Job qo'shildi ✅"
             bot.send_message(chat_id=chat_id, text=text)
+            "Sizning javobingiz yuborildi😊"
 
         elif "delet_job_name:" in text:
             text = text.split('\n')
@@ -100,12 +102,13 @@ class Samtuit:
 
 
         elif jobs:
-            text1 = f"Sizning javobingiz yuborildi😊"
+            text1 = f"Sizning javobingiz yuborildi😊\n\n\Sizga berilgan savol:{self.user_text}\n\nSizning javob:{text}"
             bot.send_message(chat_id=chat_id, text=text1)
-            text = f"Javob:\n\n{text}"
+            text = f"Savolingiz:{self.user_text}\n\nJavob:{text}"
             bot.send_message(chat_id=self.user_id, text=text)
 
         else:
+            self.user_text = text
             text = f'Sizga yangi murojat kelib tushdi:\n\n' + text
             keyboard = [
                     [
@@ -115,7 +118,8 @@ class Samtuit:
                 ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             bot.send_message(chat_id=job_id, text=text, reply_markup = reply_markup)
-            text = "Sizning murojatingiz muvaffaqiyatli jo'natilmadi😊,\n javobni kuting"
+            text_main = update.message.text
+            text = f"Sizning savolingiz:{text_main}\n\nSizning murojatingiz muvaffaqiyatli jo'natildi😊,\n javobni kuting"
             bot.send_message(chat_id=chat_id, text=text)
 
     def get_request(self,update:Update,context:CallbackContext):
@@ -125,7 +129,7 @@ class Samtuit:
         user_id = data.split('_')[1]
         self.user_id = user_id
 
-        text = "Javobni yozing😊"
+        text = f"Savol:{self.user_text}\n\nJavobni yozing😊"
         query.edit_message_text(text=text, reply_markup=None)
 
     def get_notrequest(self,update:Update,context:CallbackContext):
