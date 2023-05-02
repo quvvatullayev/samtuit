@@ -6,7 +6,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 bot = Samtuit()
-TOKEN = "5567524975:AAHzn2G8Ws6IgE_XRjuW3LTGv2eUtsiXL8E"
+TOKEN = "5677023630:AAGdskZAvZwdRix213Ho28QaN-NZVcQtuU8"
 
 @app.route("/", methods=["GET", "POST"])
 def index():
