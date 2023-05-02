@@ -26,9 +26,6 @@ def start():
     updater.dispatcher.add_handler(CallbackQueryHandler(bot.get_request, pattern="request_"))
     updater.dispatcher.add_handler(CallbackQueryHandler(bot.get_notrequest, pattern="notrequest_"))
     updater.dispatcher.add_handler(MessageHandler(Filters.text, bot.post))
-
-    updater.start_polling()
-    updater.idle()
     return "Hello World!"
 
 if __name__ == "__main__":
