@@ -28,7 +28,7 @@ def start():
     updater.dispatcher.add_handler(CallbackQueryHandler(bot.get_notrequest, pattern="notrequest_"))
     updater.dispatcher.add_handler(MessageHandler(Filters.text, bot.post))
     updater.dispatcher.process_update(update = update)
-    return "ok"
+    return "welcome to my bot! :) ..."
 
 if __name__ == "__main__":
     app.run(debug=True)
