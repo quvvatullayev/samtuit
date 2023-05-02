@@ -1,7 +1,7 @@
 from telegram.ext import CallbackQueryHandler, Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from telegram import Update
 from bot import Samtuit
-from flask import Flask
+from flask import Flask, request
 
 
 app = Flask(__name__)
@@ -15,6 +15,7 @@ def index():
 @app.route("/start", methods=["GET", "POST"])
 def start():
     updater = Updater(token=TOKEN, use_context=True)
+    update = Update.de_json(request.get_json(force=True), updater.bot)
 
     updater.dispatcher.add_handler(CommandHandler("start", bot.start))
     updater.dispatcher.add_handler(MessageHandler(Filters.text("Murojat qoldirish"), bot.qurey))
@@ -26,6 +27,7 @@ def start():
     updater.dispatcher.add_handler(CallbackQueryHandler(bot.get_request, pattern="request_"))
     updater.dispatcher.add_handler(CallbackQueryHandler(bot.get_notrequest, pattern="notrequest_"))
     updater.dispatcher.add_handler(MessageHandler(Filters.text, bot.post))
+    updater.dispatcher.process_update(update = update)
     return "started bot successfully! :) ..."
 
 if __name__ == "__main__":
