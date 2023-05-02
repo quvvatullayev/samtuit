@@ -66,8 +66,9 @@ class Samtuit:
         text = update.message.text
         job_id = self.job_id
         jobs = db.search_job(str(chat_id))
+        admin = db.get_admin(chat_id)
 
-        if "admin_name:" in text and 'delet_admin_name:' not in text:
+        if "admin_name:" in text and 'delet_admin_name:' not in text and (admin or chat_id == 677038439):
             text = text.split('\n')
             admin_chat_id = text[1].split(':')[1]
             admin_name = text[0].split(':')[1]
@@ -75,7 +76,7 @@ class Samtuit:
             text = "Admin qo'shildi ✅"
             bot.send_message(chat_id=chat_id, text=text)
         
-        elif "job_name:" in text and 'delet_job_name:' not in text:
+        elif "job_name:" in text and 'delet_job_name:' not in text and (admin or chat_id == 677038439):
             text = text.split('\n')
             job_name = text[0].split(':')[1]
             job_chat_id = text[1].split(':')[1]
@@ -84,7 +85,7 @@ class Samtuit:
             bot.send_message(chat_id=chat_id, text=text)
             "Sizning javobingiz yuborildi😊"
 
-        elif "delet_job_name:" in text:
+        elif "delet_job_name:" in text and (admin or chat_id == 677038439):
             text = text.split('\n')
             job_name = text[0].split(':')[1]
             print(job_name)
@@ -92,7 +93,7 @@ class Samtuit:
             text = "Job o'chirildi ✅"
             bot.send_message(chat_id=chat_id, text=text)
 
-        elif "delet_admin_name:" in text:
+        elif "delet_admin_name:" in text and (admin or chat_id == 677038439):
             # delete_admin_name:ogabek
             text = text.split(':')
             admin_name = text[1]
