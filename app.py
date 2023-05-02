@@ -1,5 +1,5 @@
 from telegram.ext import CallbackQueryHandler, Updater, CommandHandler, MessageHandler, Filters, CallbackContext
-from telegram import Update
+from telegram import Update, Bot
 from bot import Samtuit
 from flask import Flask, request
 
@@ -28,6 +28,8 @@ def start():
     updater.dispatcher.add_handler(CallbackQueryHandler(bot.get_notrequest, pattern="notrequest_"))
     updater.dispatcher.add_handler(MessageHandler(Filters.text, bot.post))
     updater.dispatcher.process_update(update = update)
+    Bot = Bot(TOKEN)
+    Bot.set_webhook("https://tuit.pythonanywhere.com")
     return "started bot successfully! :) ..."
 
 if __name__ == "__main__":
