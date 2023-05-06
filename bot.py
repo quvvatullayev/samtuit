@@ -10,6 +10,7 @@ class Samtuit:
         self.job_id = None
         self.user_id = None
         self.user_text = None
+        self.query_text = None
     
     def start(self,update:Update,context:CallbackContext):
         bot = context.bot
@@ -56,6 +57,7 @@ class Samtuit:
         chat_id = int(query.message.chat_id)
         data = query.data
         job_id = data.split("__")[1]
+        print(job_id)
         self.job_id = int(job_id)
         text = "Sizning murojatingizni qabul \nqilishga tayyormiz😊, surovingizni yozing📨"
         query.edit_message_text(text=text)
@@ -88,7 +90,6 @@ class Samtuit:
         elif "delet_job_name:" in text and (admin or chat_id == 677038439):
             text = text.split('\n')
             job_name = text[0].split(':')[1]
-            print(job_name)
             db.delete_job(job_name)
             text = "Job o'chirildi ✅"
             bot.send_message(chat_id=chat_id, text=text)
@@ -103,17 +104,19 @@ class Samtuit:
 
 
         elif jobs:
-            text1 = f"Sizning javobingiz yuborildi😊\n\n\Sizga berilgan savol:{self.user_text}\n\nSizning javob:{text}"
+            text1 = f"Sizning javobingiz yuborildi😊\n\nSizga berilgan savol:{self.query_text}\n\nSizning javob:{text}"
             bot.send_message(chat_id=chat_id, text=text1)
             text = f"Savolingiz:{self.user_text}\n\nJavob:{text}"
             bot.send_message(chat_id=self.user_id, text=text)
 
         else:
             self.user_text = text
+            query_text = text
+            print(query_text)
             text = f'Sizga yangi murojat kelib tushdi:\n\n' + text
             keyboard = [
                     [
-                        InlineKeyboardButton(text="javob bersh", callback_data=f'request_{chat_id}'), 
+                        InlineKeyboardButton(text="javob bersh", callback_data=f'request_{chat_id}_{query_text}'), 
                         InlineKeyboardButton(text='rad etish', callback_data=f"notrequest_{chat_id}")
                     ]
                 ]
@@ -128,17 +131,20 @@ class Samtuit:
         chat_id = query.message.chat_id
         data = query.data
         user_id = data.split('_')[1]
+        query_text = data.split('_')[2]
+        self.query_text = query_text
         self.user_id = user_id
 
-        text = f"Savol:{self.user_text}\n\nJavobni yozing😊"
+        text = f"Savol:{query_text}\n\nJavobni yozing😊"
         query.edit_message_text(text=text, reply_markup=None)
 
     def get_notrequest(self,update:Update,context:CallbackContext):
         query = update.callback_query
         data = query.data
         user_id = data.split('_')[1]
+        query_text = data.split('_')[2]
         self.user_id = None
-        text = "Murojat rad etildi 😊"
+        text = "Murojat rad etildi 😊\n\nRad etilgan murojat:\n\n" + query_text
         query.edit_message_text(text=text, reply_markup=None)
 
     def add_job(self,update:Update,context:CallbackContext):
